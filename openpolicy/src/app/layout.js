@@ -5,7 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import theme from '@/theme';
 import "./globals.css";
 
-const inter = Bricolage_Grotesque({ subsets: ["latin"] });
+const bric = Bricolage_Grotesque({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Create Next App",
@@ -15,7 +15,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={bric.className}>
         <AppRouterCacheProvider>
           <CssBaseline />
           <ThemeProvider theme={theme} >
