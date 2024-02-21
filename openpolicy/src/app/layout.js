@@ -1,11 +1,11 @@
-import { Inter } from "next/font/google";
+import { Bricolage_Grotesque } from "next/font/google";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import theme from '../theme';
+import theme from '@/theme';
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Bricolage_Grotesque({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Create Next App",
