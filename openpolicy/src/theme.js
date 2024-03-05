@@ -1,25 +1,30 @@
 'use client';
 
+import { Bricolage_Grotesque } from 'next/font/google';
+
 import { createTheme } from '@mui/material/styles';
+
+const bric = Bricolage_Grotesque({ subsets: ["latin"] });
 
 const theme = createTheme({
     palette: {
         primary: {
-            main: '#1565c0', // A professional blue for primary actions
+            main: '#07081D', // A professional blue for primary actions
         },
         secondary: {
             main: '#ff1744', // A striking red for urgent actions or highlights
         },
         background: {
-            default: '#f5f5f5', // A light grey for background to keep the focus on content
-            paper: '#ffffff', // White backgrounds for areas requiring user focus
+            default: '#07081D', // A light grey for background to keep the focus on content
+            paper: '#07081D', // White backgrounds for areas requiring user focus
         },
     },
     typography: {
-        fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+        fontFamily: bric.style.fontFamily,
         button: {
-            textTransform: 'none', // Keeps button text in regular case for readability
+            textTransform: "none", // Keeps button text in regular case for readability
         },
+        color: "#fff"
     },
     components: {
         // Customizations for specific components can go here
