@@ -5,6 +5,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import theme from '@/theme';
 import "./globals.css";
 
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+
 const bric = Bricolage_Grotesque({ subsets: ["latin"] });
 
 export const metadata = {
@@ -15,14 +18,16 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={bric.className}>
-        <AppRouterCacheProvider>
-          <CssBaseline />
-          <ThemeProvider theme={theme} >
+      <AppRouterCacheProvider>
+        <CssBaseline />
+        <ThemeProvider theme={theme}>
+          <body className={bric.className}>
+            <Header />
             {children}
-          </ThemeProvider>
-        </AppRouterCacheProvider>
-      </body>
+            <Footer />
+          </body>
+        </ThemeProvider>
+      </AppRouterCacheProvider>
     </html>
   );
 }
