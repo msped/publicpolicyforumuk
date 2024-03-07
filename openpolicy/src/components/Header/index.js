@@ -27,16 +27,20 @@ import { useTheme } from '@mui/material/styles';
 
 const menuContents = [
     {
+        name: "Design",
+        link: "design"
+    },
+    {
         name: "Collaborate",
         link: "collaborate"
     },
     {
-        name: "Review",
-        link: "review"
-    },
-    {
         name: "Integrate",
         link: "integrate"
+    },
+    {
+        name: "Pricing",
+        link: "pricing"
     },
     {
         name: "Support",
