@@ -20,9 +20,10 @@ describe('Header', () => {
         window.matchMedia = createMatchMedia(1200)
         render(<Header />);
         const menuContents = [
+            "Design",
             "Collaborate",
-            "Review",
             "Integrate",
+            "Pricing",
             "Support"
         ]
 

@@ -16,9 +16,10 @@ describe('Footer Component', () => {
     test('renders all menu contents', () => {
         render(<Footer />);
         const menuContents = [
+            "Design",
             "Collaborate",
-            "Review",
             "Integrate",
+            "Pricing",
             "Support"
         ];
         
