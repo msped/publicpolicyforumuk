@@ -14,8 +14,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <AppRouterCacheProvider>
-        <CssBaseline />
         <ThemeProvider theme={theme}>
+          <CssBaseline />
           <body className={bric.className}>
             <Header />
             {children}
