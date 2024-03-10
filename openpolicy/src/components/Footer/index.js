@@ -45,9 +45,10 @@ const styles = {
         }
     },
     footerContainer: {
-        position: 'fixed',
+        position: 'static',
         bottom: 0,
         flexGrow: 1,
+        paddingTop: 3,
         width: '100%',
     }
 }
