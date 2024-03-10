@@ -9,15 +9,18 @@ const bric = Bricolage_Grotesque({ subsets: ["latin"] });
 const theme = createTheme({
     palette: {
         primary: {
-            main: '#07081D', // A professional blue for primary actions
+            main: '#07081D',
         },
         secondary: {
-            main: '#ff1744', // A striking red for urgent actions or highlights
+            main: '#ff1744',
         },
         background: {
-            default: '#07081D', // A light grey for background to keep the focus on content
-            paper: '#07081D', // White backgrounds for areas requiring user focus
+            default: '#07081D',
+            paper: '#07081D'
         },
+        pastel: {
+            main: '#F1DDD9'
+        }
     },
     typography: {
         fontFamily: bric.style.fontFamily,
