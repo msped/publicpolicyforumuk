@@ -133,7 +133,16 @@ export default function Header() {
                 <Button sx={{ color: '#fff' }}>
                     Login
                 </Button>
-                <Button variant='contained' sx={{ backgroundColor: '#C9B8F9', color: '#07081D' }}>
+                <Button 
+                variant='contained' 
+                sx={{ 
+                    backgroundColor: '#C9B8F9', 
+                    color: '#07081D',
+                    ':hover': {
+                        bgcolor: '#8862f7',
+                        color: '#fff'
+                    } 
+                }}>
                     Register
                 </Button>
             </Stack>
