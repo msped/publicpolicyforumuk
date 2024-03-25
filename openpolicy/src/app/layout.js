@@ -4,6 +4,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from '@/theme';
 import "./globals.css";
+import ConvexClientProvider from "./ConvexClientProvider";
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -17,9 +18,11 @@ export default function RootLayout({ children }) {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <body className={bric.className}>
-            <Header />
-            {children}
-            <Footer />
+            <ConvexClientProvider>
+              <Header />
+              {children}
+              <Footer />
+            </ConvexClientProvider>
           </body>
         </ThemeProvider>
       </AppRouterCacheProvider>
