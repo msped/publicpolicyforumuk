@@ -17,7 +17,6 @@ describe('Footer Component', () => {
             "Design",
             "Collaborate",
             "Integrate",
-            "Pricing",
             "Support"
         ];
 

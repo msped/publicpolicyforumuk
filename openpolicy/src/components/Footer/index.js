@@ -27,10 +27,6 @@ const menuContents = [
         link: "integrate"
     },
     {
-        name: "Pricing",
-        link: "pricing"
-    },
-    {
         name: "Support",
         link: "support"
     },
