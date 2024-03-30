@@ -23,7 +23,16 @@ import { ClickAwayListener } from '@mui/base/ClickAwayListener';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
-// import { signIn, useSession } from "next-auth/react";
+import { 
+    SignInButton,
+    SignUpButton, 
+    SignedIn, 
+    SignedOut,
+    OrganizationSwitcher,
+    UserProfile,
+    useSession, 
+    SignOutButton
+} from "@clerk/nextjs";
 
 const menuContents = [
     {
@@ -96,11 +105,12 @@ export default function Header() {
     const theme = useTheme();
 
     const isDesktop = useMediaQuery(theme.breakpoints.up('md')) 
+    const isTablet = useMediaQuery(theme.breakpoints.up('sm'))
 
     const [menuHamburger, setMenuHamburger] = useState(false)
     const [anchorEl, setAnchorEl] = useState(null);
-    const accountMenu = Boolean(anchorEl)
-    // const { data: session, status } = useSession();
+    const accountMenu = Boolean(anchorEl);
+    const session = useSession();
 
     const handleMenuNavigation = () => {
         setMenuHamburger(!menuHamburger)
@@ -125,26 +135,31 @@ export default function Header() {
         setMenuHamburger(false)
     }
 
-    const session = null
 
     const loginRegisterButtons = () => {
         return (
             <Stack direction='row' spacing={3} justifyContent='space-evenly'>
-                <Button sx={{ color: '#fff' }}>
-                    Login
-                </Button>
-                <Button 
-                variant='contained' 
-                sx={{ 
-                    backgroundColor: '#C9B8F9', 
-                    color: '#07081D',
-                    ':hover': {
-                        bgcolor: '#8862f7',
-                        color: '#fff'
-                    } 
-                }}>
-                    Register
-                </Button>
+                <SignInButton mode='modal'>
+                    <Button sx={{ color: '#fff' }}>
+                        Login
+                    </Button>
+                </SignInButton>
+
+                <SignUpButton mode='modal'>
+                    <Button 
+                        variant='contained' 
+                        sx={{ 
+                            backgroundColor: '#C9B8F9', 
+                            color: '#07081D',
+                            ':hover': {
+                                bgcolor: '#8862f7',
+                                color: '#fff'
+                            } 
+                        }}
+                    >
+                        Register
+                    </Button>
+                </SignUpButton>
             </Stack>
         )
     }
@@ -196,53 +211,57 @@ export default function Header() {
                         <Box sx={{ flexGrow: 1, display: {xs: 'flex', md: 'none'}}}></Box>}
 
                         {/* Account Settings Desktop View */}
-                        {session ? (
-                        <Box>
-                            <Box sx={styles.accountMenuBox}>
-                                <Tooltip title="Account settings">
-                                    <Stack direction='row' spacing={1}>
-                                        <Avatar 
-                                            sx={styles.accountAvatar} 
-                                            alt={session.user.username}
-                                            src={session.picture}
-                                            onClick={handleAccountMenu}
-                                            aria-controls={accountMenu ? 'account-menu' : undefined}
-                                            aria-haspopup="true"
-                                            aria-expanded={accountMenu ? 'true' : undefined}
-                                        />
-                                    </Stack>
-                                </Tooltip>
+                        <SignedIn>
+                            { (isDesktop || isTablet) && <OrganizationSwitcher />}
+
+                            <Box>
+                                <Box sx={styles.accountMenuBox}>
+                                    <Tooltip title="Account settings">
+                                        <Stack direction='row' spacing={1}>
+                                            <Avatar 
+                                                sx={styles.accountAvatar} 
+                                                alt={session?.username}
+                                                src={session?.user?.imageUrl}
+                                                onClick={handleAccountMenu}
+                                                aria-controls={accountMenu ? 'account-menu' : undefined}
+                                                aria-haspopup="true"
+                                                aria-expanded={accountMenu ? 'true' : undefined}
+                                            />
+                                        </Stack>
+                                    </Tooltip>
+                                </Box>
+                                {isDesktop && (<Menu
+                                    anchorEl={anchorEl}
+                                    id="account-menu"
+                                    open={accountMenu}
+                                    onClose={handleAccountMenu}
+                                    onClick={handleAccountMenu}
+                                    slotProps={{
+                                        elevation: 0,
+                                        sx: styles.menuPaperProps,
+                                    }}
+                                    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                                    sx={{ display: 'flex' }}
+                                >
+                                    <MenuItem href='/dashboard' sx={{ color: "#fff" }}>
+                                        Dashboard
+                                    </MenuItem>
+                                    <MenuItem href='/profile' sx={{ color: "#fff" }}>
+                                        Profile
+                                    </MenuItem>
+                                    <MenuItem sx={{ color: "#fff" }}>
+                                        Logout
+                                    </MenuItem>
+                                </Menu>)}
                             </Box>
-                            {isDesktop && (<Menu
-                                anchorEl={anchorEl}
-                                id="account-menu"
-                                open={accountMenu}
-                                onClose={handleAccountMenu}
-                                onClick={handleAccountMenu}
-                                slotProps={{
-                                    elevation: 0,
-                                    sx: styles.menuPaperProps,
-                                }}
-                                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                                sx={{ display: 'flex' }}
-                            >
-                                <MenuItem href='/dashboard' sx={{ color: "#fff" }}>
-                                    Dashboard
-                                </MenuItem>
-                                <MenuItem href='/settings' sx={{ color: "#fff" }}>
-                                    Settings
-                                </MenuItem>
-                                <MenuItem sx={{ color: "#fff" }}>
-                                    Logout
-                                </MenuItem>
-                            </Menu>)}
-                        </Box>):  
-                            isDesktop && (
+                        </SignedIn>
+                        <SignedOut>
+                            {isDesktop && (
                             <Box sx={{ display: 'flex' }}>
                                 {loginRegisterButtons()}
-                            </Box>)
-                        }
+                            </Box>)}
+                        </SignedOut>
                         
 
                     </Toolbar>
@@ -266,14 +285,12 @@ export default function Header() {
                                         <ListItemText primary={item.name} />
                                     </ListItemButton>
                                 ))}
-                                {!session &&  (
-                                    <>
+                                <SignedOut>
                                     <Divider variant='middle' sx={{ borderColor: '#fff' }}/>
                                     <Box sx={{ marginY: 1 }}>
                                         {loginRegisterButtons()}
                                     </Box>
-                                    </>
-                                    )}
+                                </SignedOut>
                             </List>
                         </Box>
                     </Collapse>)}
@@ -283,6 +300,10 @@ export default function Header() {
                         minHeight: '200px',
                         backgroundColor: 'inherit'
                     }}>
+                        <Box px={2} py={1}>
+                            {!isTablet && !isDesktop && (
+                                <OrganizationSwitcher />
+                            )}
                         <Box sx={{
                             display: 'flex'
                         }}>
@@ -290,13 +311,17 @@ export default function Header() {
                                 <ListItemButton component={Link} href="/dashbord">
                                     <ListItemText primary="Dashboard" />
                                 </ListItemButton>
-                                <ListItemButton component={Link} href="/settings">
-                                    <ListItemText primary="Settings" />
+                                <ListItemButton component={Link} href="/profile">
+                                    <ListItemText primary="Profile" />
                                 </ListItemButton>
-                                <ListItemButton component={Link} href="/logout">
-                                    <ListItemText primary="Logout" />
+                                <SignOutButton>
+                                    
+                                <ListItemButton>
+                                    Sign Out
                                 </ListItemButton>
+                                </SignOutButton>
                             </List>
+                        </Box>
                         </Box>
                     </Collapse>}
                 </AppBar>
