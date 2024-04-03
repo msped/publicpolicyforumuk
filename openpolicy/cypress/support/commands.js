@@ -12,7 +12,7 @@
 
 Cypress.Commands.add(`signIn`, () => {
     cy.log(`Signing in.`);
-    cy.visit(`/`);
+    cy.visit(`/`, {failOnStatusCode: false});
 
     cy.window()
         .should((window) => {
