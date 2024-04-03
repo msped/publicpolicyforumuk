@@ -69,7 +69,7 @@ function Copyright() {
 
 export default function index() {
     return (
-        <Box sx={styles.footerContainer}>
+        <footer sx={styles.footerContainer}>
             <AppBar position="static">
                 <Toolbar sx={{ padding: 2}}>
                     <Grid container spacing={2}>
@@ -156,6 +156,6 @@ export default function index() {
                     </Grid>
                 </Toolbar>
             </AppBar>
-        </Box>
+        </footer>
     )
 }
