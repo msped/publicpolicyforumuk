@@ -13,12 +13,11 @@ import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
+import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { ClickAwayListener } from '@mui/base/ClickAwayListener';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
@@ -28,10 +27,7 @@ import {
     SignUpButton, 
     SignedIn, 
     SignedOut,
-    OrganizationSwitcher,
-    UserProfile,
-    useSession, 
-    SignOutButton
+    UserButton,
 } from "@clerk/nextjs";
 
 const menuContents = [
@@ -48,10 +44,6 @@ const menuContents = [
         link: "integrate"
     },
     {
-        name: "Pricing",
-        link: "pricing"
-    },
-    {
         name: "Support",
         link: "support"
     },
@@ -65,40 +57,6 @@ const styles = {
         },
         cursor: 'pointer'
     },
-    accountMenuBox: {
-        display: 'flex',
-        alignItems: 'center',
-        textAlign: 'center',
-    },
-    accountAvatar: {
-        width: 32,
-        height: 32,
-        mx: .5 
-    },
-    menuPaperProps: {
-        overflow: 'visible',
-        filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-        mt: 1.5,
-        minWidth: '200px',
-        '& .MuiAvatar-root': {
-            width: 32,
-            height: 32,
-            ml: -0.5,
-            mr: 1,
-        },
-        '&::before': {
-            content: '""',
-            display: 'block',
-            position: 'absolute',
-            top: 0,
-            right: 14,
-            width: 10,
-            height: 10,
-            bgcolor: 'background.paper',
-            transform: 'translateY(-50%) rotate(45deg)',
-            zIndex: 0,
-        },
-    }
 }
 
 export default function Header() {
@@ -108,30 +66,12 @@ export default function Header() {
     const isTablet = useMediaQuery(theme.breakpoints.up('sm'))
 
     const [menuHamburger, setMenuHamburger] = useState(false)
-    const [anchorEl, setAnchorEl] = useState(null);
-    const accountMenu = Boolean(anchorEl);
-    const session = useSession();
 
     const handleMenuNavigation = () => {
         setMenuHamburger(!menuHamburger)
-        if (accountMenu) {
-            handleAccountMenu();
-        }
     }
 
-    const handleAccountMenu = (event) => {
-        if (accountMenu) {
-            setAnchorEl(null);
-        } else {
-            setAnchorEl(event.currentTarget);
-        }
-        if (menuHamburger) {
-            handleMenuNavigation()
-        }
-    };
-
     const handleClickAway = () => {
-        setAnchorEl(null);
         setMenuHamburger(false)
     }
 
@@ -166,7 +106,7 @@ export default function Header() {
 
     return (
         <ClickAwayListener onClickAway={handleClickAway}>
-            <Box sx={{ flexGrow: 1 }}>
+            <header sx={{ flexGrow: 1 }}>
                 <AppBar position="static">
                     <Toolbar>
                         <Box onClick={handleMenuNavigation} sx={styles.menuHamburger}>
@@ -180,7 +120,7 @@ export default function Header() {
                                 width={60}
                             />
                         </Link>
-                        <Link href="/" aria-label='Home'>
+                        {isTablet && (<Link href="/" aria-label='Home'>
                             <Typography
                                 variant="h6"
                                 sx={{ 
@@ -191,7 +131,7 @@ export default function Header() {
                             >
                                 OPENPOLICY
                             </Typography>
-                        </Link>
+                        </Link>)}
 
                         {/* Menu Desktop View */}
                         {isDesktop ? ( <Stack 
@@ -212,49 +152,17 @@ export default function Header() {
 
                         {/* Account Settings Desktop View */}
                         <SignedIn>
-                            { (isDesktop || isTablet) && <OrganizationSwitcher />}
-
-                            <Box>
-                                <Box sx={styles.accountMenuBox}>
-                                    <Tooltip title="Account settings">
-                                        <Stack direction='row' spacing={1}>
-                                            <Avatar 
-                                                sx={styles.accountAvatar} 
-                                                alt={session?.username}
-                                                src={session?.user?.imageUrl}
-                                                onClick={handleAccountMenu}
-                                                aria-controls={accountMenu ? 'account-menu' : undefined}
-                                                aria-haspopup="true"
-                                                aria-expanded={accountMenu ? 'true' : undefined}
-                                            />
-                                        </Stack>
-                                    </Tooltip>
-                                </Box>
-                                {isDesktop && (<Menu
-                                    anchorEl={anchorEl}
-                                    id="account-menu"
-                                    open={accountMenu}
-                                    onClose={handleAccountMenu}
-                                    onClick={handleAccountMenu}
-                                    slotProps={{
-                                        elevation: 0,
-                                        sx: styles.menuPaperProps,
-                                    }}
-                                    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                                    sx={{ display: 'flex' }}
-                                >
-                                    <MenuItem href='/dashboard' sx={{ color: "#fff" }}>
-                                        Dashboard
-                                    </MenuItem>
-                                    <MenuItem href='/profile' sx={{ color: "#fff" }}>
-                                        Profile
-                                    </MenuItem>
-                                    <MenuItem sx={{ color: "#fff" }}>
-                                        Logout
-                                    </MenuItem>
-                                </Menu>)}
-                            </Box>
+                            <Stack direction='row' spacing={2.5} justifyContent='center' alignItems='center'>
+                                <NotificationsIcon />
+                                <Link href='/dashboard'>
+                                    <SpaceDashboardIcon sx={{ 
+                                        display: 'flex',
+                                        justifyContent: 'center', 
+                                        alignItems: 'center'
+                                    }}/>
+                                </Link>
+                                <UserButton afterSignOutUrl='/'/>
+                            </Stack>
                         </SignedIn>
                         <SignedOut>
                             {isDesktop && (
@@ -262,8 +170,6 @@ export default function Header() {
                                 {loginRegisterButtons()}
                             </Box>)}
                         </SignedOut>
-                        
-
                     </Toolbar>
 
                     {/* Menu Mobile View */}
@@ -294,38 +200,8 @@ export default function Header() {
                             </List>
                         </Box>
                     </Collapse>)}
-
-                    {/*  Account Settings Mobile View */}
-                    {session && !isDesktop && <Collapse in={accountMenu} sx={{
-                        minHeight: '200px',
-                        backgroundColor: 'inherit'
-                    }}>
-                        <Box px={2} py={1}>
-                            {!isTablet && !isDesktop && (
-                                <OrganizationSwitcher />
-                            )}
-                        <Box sx={{
-                            display: 'flex'
-                        }}>
-                            <List>
-                                <ListItemButton component={Link} href="/dashbord">
-                                    <ListItemText primary="Dashboard" />
-                                </ListItemButton>
-                                <ListItemButton component={Link} href="/profile">
-                                    <ListItemText primary="Profile" />
-                                </ListItemButton>
-                                <SignOutButton>
-                                    
-                                <ListItemButton>
-                                    Sign Out
-                                </ListItemButton>
-                                </SignOutButton>
-                            </List>
-                        </Box>
-                        </Box>
-                    </Collapse>}
                 </AppBar>
-            </Box>
+            </header>
         </ClickAwayListener>
     );
 }
