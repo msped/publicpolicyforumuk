@@ -36,7 +36,7 @@ Cypress.Commands.add(`signIn`, () => {
 
 Cypress.Commands.add(`signOut`, () => {
     cy.log(`sign out by clearing all cookies.`);
-    cy.clearCookies({ domain: null });
+    cy.clearCookies({ domain: 'http://127.0.0.1:3000' });
 });
 
 //
