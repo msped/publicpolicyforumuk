@@ -85,6 +85,7 @@ export default function Home() {
     <Container maxWidth="md">
       {/* Hero */}
       <Box
+        component='div'
         sx={{
           display: 'flex',
           flexDirection: 'column',
