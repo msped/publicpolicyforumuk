@@ -1,7 +1,7 @@
 export default {
     providers: [
       {
-        domain: "https://bright-warthog-17.clerk.accounts.dev",
+        domain: process.env.CLERK_ISSUER,
         applicationID: "convex",
       },
     ]
