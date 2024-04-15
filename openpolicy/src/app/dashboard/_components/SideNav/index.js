@@ -21,7 +21,7 @@ export default function SideNav() {
             alignItems: 'flex-start',
         }}>
             <OrganizationSwitcher />
-            <Link href='/documents/new' passHref>
+            <Link href='/dashboard/new' passHref>
                 <Button
                     sx={{
                         display: 'flex',
@@ -38,29 +38,29 @@ export default function SideNav() {
                     New document
                 </Button>
             </Link>
-            <Link href='/documents/documents' passHref>
-            <Button
-                sx={{
-                    display: 'flex',
-                    color: '#fff',
-                    fontWeight: pathname.includes('/documents') ? "700" : "400"
-                }}
-                startIcon={pathname.includes('/documents') ? <ArticleIcon/> : <ArticleOutlinedIcon />}
-            >
-                Documents
-            </Button>
+            <Link href='/dashboard/documents' passHref>
+                <Button
+                    sx={{
+                        display: 'flex',
+                        color: '#fff',
+                        fontWeight: pathname.includes('/documents') ? "700" : "400"
+                    }}
+                    startIcon={pathname.includes('/documents') ? <ArticleIcon/> : <ArticleOutlinedIcon />}
+                >
+                    Documents
+                </Button>
             </Link>
-            <Link href='/documents/favourites' passHref>
-            <Button
-                sx={{
-                    display: 'flex',
-                    color: '#fff',
-                    fontWeight: pathname.includes('/favourites') ? "700" : "400"
-                }}
-                startIcon={pathname.includes('/favourites') ? <StarIcon/> : <StarBorderIcon />}
-            >
-                Favourites
-            </Button>
+            <Link href='/dashboard/favourites' passHref>
+                <Button
+                    sx={{
+                        display: 'flex',
+                        color: '#fff',
+                        fontWeight: pathname.includes('/favourites') ? "700" : "400"
+                    }}
+                    startIcon={pathname.includes('/favourites') ? <StarIcon/> : <StarBorderIcon />}
+                >
+                    Favourites
+                </Button>
             </Link>
         </Stack>
     )
