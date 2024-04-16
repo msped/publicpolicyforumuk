@@ -8,7 +8,7 @@ describe('Side Navigation', () => {
 
     beforeEach(() => {
         cy.visit('/dashboard/documents', { failOnStatusCode: false});
-    });
+    })
     
     it('renders the organization switcher', () => {
         cy.get('[aria-label="Open organization switcher"]').should('exist'); 
@@ -20,7 +20,7 @@ describe('Side Navigation', () => {
     });
     
     it('has a working "Documents" link', () => {
-        cy.get('a[href="/dashboard/documents"]').click();
+        cy.get('a[href="/dashboard/documents"]').click({ multiple: true });
         cy.url().should('include', '/dashboard/documents');
     });
     
