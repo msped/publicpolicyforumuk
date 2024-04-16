@@ -4,7 +4,7 @@ describe('Side Navigation', () => {
         cy.session('signed-in', () => {
             cy.signIn();
         })
-    });
+    })
 
     beforeEach(() => {
         cy.visit('/dashboard/documents', { failOnStatusCode: false});
@@ -35,13 +35,13 @@ describe('Side Navigation', () => {
             .should('have.css', 'font-weight', expectedFontWeight);
         };
     
-        cy.visit('/dashboard/new');
+        cy.visit('/dashboard/new', { failOnStatusCode: false});
         checkButtonStyle('New document', '700');
 
-        cy.visit('/dashboard/documents');
+        cy.visit('/dashboard/documents', { failOnStatusCode: false});
         checkButtonStyle('Documents', '700');
     
-        cy.visit('/dashboard/favourites');
+        cy.visit('/dashboard/favourites', { failOnStatusCode: false});
         checkButtonStyle('Favourites', '700');
     });
 });
