@@ -154,7 +154,7 @@ export default function Header() {
                         <SignedIn>
                             <Stack direction='row' spacing={2.5} justifyContent='center' alignItems='center'>
                                 <NotificationsIcon />
-                                <Link href='/dashboard'>
+                                <Link href='/dashboard/documents'>
                                     <SpaceDashboardIcon sx={{ 
                                         display: 'flex',
                                         justifyContent: 'center', 
