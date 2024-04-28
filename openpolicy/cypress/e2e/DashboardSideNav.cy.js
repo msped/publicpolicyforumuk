@@ -1,12 +1,9 @@
 
 describe('Side Navigation', () => {
-    before(() => {
+    beforeEach(() => {
         cy.session('signed-in', () => {
             cy.signIn();
         })
-    })
-
-    beforeEach(() => {
         cy.visit('/dashboard/documents', { failOnStatusCode: false});
     })
     
