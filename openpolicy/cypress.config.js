@@ -14,5 +14,7 @@ module.exports = defineConfig({
       // implement node event listeners here
     },
     testIsolation: false,
+    experimentalSessionAndOrigin: true,
+    experimentalModifyObstructiveThirdPartyCode: true,
   },
 });
