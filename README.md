@@ -1,3 +1,10 @@
-# Open Policy
+import express from 'express';
 
-Open source legislation and policy collaboration tool.
+const router = express.Router();
+
+/* GET home page. */
+router.get('/', (req, res) => {
+  res.render('index', { title: 'Express' });
+});
+
+export default router;
