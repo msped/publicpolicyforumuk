@@ -1,3 +1,7 @@
-# Open Policy
+// This is a comment
+const message = 'Hello world!'
+console.log(message)
 
-Open source legislation and policy collaboration tool.
+const sum = (a, b) => a + b
+const result = sum(2, 3)
+console.log(result)
